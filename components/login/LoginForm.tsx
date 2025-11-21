@@ -61,6 +61,7 @@ export const LoginForm = (props: LoginFormProps) => {
                       aria-invalid={fieldState.invalid}
                       disabled={isPending}
                     />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
                 )}
               />
