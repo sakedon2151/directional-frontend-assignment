@@ -8,7 +8,7 @@ assignees: sakedon2151
 
 ## Task
 
-- [ ] 
+- [ ]
 
 ## Memo
 
