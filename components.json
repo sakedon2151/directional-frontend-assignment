@@ -13,7 +13,7 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
+    "utils": "@/lib/tailwindMerge",
     "ui": "@/components/common",
     "lib": "@/lib",
     "hooks": "@/hooks"
