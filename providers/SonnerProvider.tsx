@@ -6,7 +6,7 @@ export const SonnerProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {children}
-      <Toaster position="top-center" richColors />
+      <Toaster position="top-center" />
     </>
   );
 };
