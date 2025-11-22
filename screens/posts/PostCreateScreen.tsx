@@ -10,7 +10,7 @@ interface Props {
 export const PostCreateScreen = (props: Props) => {
   return (
     <div className={clsx(props.className)}>
-      <PostCreateForm className='m-4'/>
+      <PostCreateForm className="m-4" />
     </div>
   );
 };

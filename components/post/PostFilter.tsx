@@ -24,7 +24,7 @@ export const PostFilter = (postFilterProps: PostFilterProps) => {
         <SortDropdown />
       </ButtonGroup>
       <Button variant="default" asChild>
-        <Link href='/posts/create'>
+        <Link href="/posts/create">
           <Pencil />새 글 작성
         </Link>
       </Button>

@@ -9,8 +9,20 @@ import { Badge } from '@/components/common/Badge';
 import { Skeleton } from '@/components/common/Skeleton';
 import { formatDateUtil } from '@/lib/formatDateUtil';
 import { getCategoryLabel } from '@/lib/mapCategoryUtil';
-import { ArrowLeft, Edit } from 'lucide-react';
+import { ArrowLeft, Delete, Edit } from 'lucide-react';
 import Link from 'next/link';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/common/AlertDialog';
+import { useDeletePostMutation } from '@/queries/post/usePostMutation';
 
 export const PostDetailScreen = () => {
   const params = useParams();
@@ -19,6 +31,11 @@ export const PostDetailScreen = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
   const { data: post, isLoading, isError, error } = useGetPostQuery(id);
+  const deletePostMutation = useDeletePostMutation();
+
+  const handleDelete = () => {
+    if (id) deletePostMutation.mutate(id);
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -84,12 +101,34 @@ export const PostDetailScreen = () => {
           뒤로 가기
         </Button>
         {isOwner && (
-          <Button asChild>
-            <Link href={`/posts/${id}/update`}>
-              <Edit className="mr-2 h-4 w-4" />
-              수정하기
-            </Link>
-          </Button>
+          <div>
+            <Button asChild className="mr-4">
+              <Link href={`/posts/${id}/update`}>
+                <Edit className="mr-2 h-4 w-4" />
+                수정하기
+              </Link>
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <Delete />
+                  삭제하기
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>정말로 해당 게시글을 삭제하시겠습니까?</AlertDialogTitle>
+                  <AlertDialogDescription>삭제된 게시글은 복구할 수 없습니다.</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={deletePostMutation.isPending}>취소</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} disabled={deletePostMutation.isPending}>
+                    {deletePostMutation.isPending ? '삭제 중...' : '확인'}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         )}
       </div>
 
