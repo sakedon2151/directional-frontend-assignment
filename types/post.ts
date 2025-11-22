@@ -42,4 +42,4 @@ export type GetMockPostsResponse = {
 export type DeleteMyPostsResponse = {
   ok: boolean;
   deleted: number;
-}
+};
