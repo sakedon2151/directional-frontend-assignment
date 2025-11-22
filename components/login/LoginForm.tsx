@@ -22,6 +22,8 @@ const loginFormSchema = z.object({
 });
 
 export const LoginForm = (props: LoginFormProps) => {
+  const { mutateAsync, isPending } = useLoginMutation();
+
   const loginForm = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -29,8 +31,6 @@ export const LoginForm = (props: LoginFormProps) => {
       password: '',
     },
   });
-
-  const { mutateAsync, isPending } = useLoginMutation();
 
   const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
     await mutateAsync(data);
