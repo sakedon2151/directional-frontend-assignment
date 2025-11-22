@@ -17,19 +17,40 @@ import { Textarea } from '../common/Textarea';
 import { ButtonGroup } from '../common/ButtonGroup';
 import { getCategoryLabel } from '@/lib/mapCategoryUtil';
 import { toast } from 'sonner';
+import { validateForbiddenWords } from '@/lib/fobiddenWordsUtil';
 
 interface PostCreateFormProps {
   className?: string;
 }
 
 const postFormSchema = z.object({
-  title: z.string().min(1, '제목을 입력해주세요.').max(80, '제목은 80자 이하여야 합니다.'),
-  body: z.string().min(1, '본문을 입력해주세요.').max(2000, '본문은 2000자 이하여야 합니다.'),
+  title: z
+    .string()
+    .min(1, '제목을 입력해주세요.')
+    .max(80, '제목은 80자 이하여야 합니다.')
+    .refine(validateForbiddenWords, {
+      message: '금칙어가 포함되어 있습니다.',
+    }),
+  body: z
+    .string()
+    .min(1, '본문을 입력해주세요.')
+    .max(2000, '본문은 2000자 이하여야 합니다.')
+    .refine(validateForbiddenWords, {
+      message: '금칙어가 포함되어 있습니다.',
+    }),
   category: z.enum([PostCategory.NOTICE, PostCategory.QNA, PostCategory.FREE] as [PostCategory, ...PostCategory[]], {
     message: '카테고리를 선택해주세요.',
   }),
   tags: z
-    .array(z.string().min(1, '태그는 1자 이상이어야 합니다.').max(24, '태그는 24자 이하여야 합니다.'))
+    .array(
+      z
+        .string()
+        .min(1, '태그는 1자 이상이어야 합니다.')
+        .max(24, '태그는 24자 이하여야 합니다.')
+        .refine(validateForbiddenWords, {
+          message: '금칙어가 포함되어 있습니다.',
+        }),
+    )
     .max(5, '태그는 최대 5개까지 등록 가능합니다.'),
 });
 
