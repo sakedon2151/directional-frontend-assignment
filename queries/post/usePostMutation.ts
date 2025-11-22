@@ -24,12 +24,14 @@ export const useCreatePostMutation = () => {
 
 export const useUpdatePostMutation = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: PostRequest }) => updatePost(id, payload),
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['post', variables.id] });
       queryClient.invalidateQueries({ queryKey: ['myPosts'] });
       toast.success('게시글이 수정되었습니다.');
+      router.push(`/posts/${variables.id}`);
     },
     onError: (error) => {
       console.error(handleAxiosError(error));
