@@ -1,11 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getPost, getMockPosts, getMyPosts } from '@/api/post';
 import { GetMyPostsParams } from '@/types/post';
 
-export const useGetMyPostsQuery = (params: GetMyPostsParams) => {
-  return useQuery({
+export const useGetMyPostsQuery = (params?: GetMyPostsParams) => {
+  return useInfiniteQuery({
     queryKey: ['myPosts', params],
-    queryFn: () => getMyPosts(params),
+    queryFn: ({ pageParam }: { pageParam: string | undefined }) => {
+      return getMyPosts({
+        ...params,
+        nextCursor: pageParam,
+      });
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => {
+      return lastPage.nextCursor ?? undefined;
+    },
   });
 };
 
