@@ -25,13 +25,12 @@ interface PostCreateFormProps {
 const postFormSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요.').max(80, '제목은 80자 이하여야 합니다.'),
   body: z.string().min(1, '본문을 입력해주세요.').max(2000, '본문은 2000자 이하여야 합니다.'),
-  category: z.enum([PostCategory.NOTICE, PostCategory.QNA, PostCategory.FREE], {
-    required_error: '카테고리를 선택해주세요.',
+  category: z.enum([PostCategory.NOTICE, PostCategory.QNA, PostCategory.FREE] as [PostCategory, ...PostCategory[]], {
+    message: '카테고리를 선택해주세요.',
   }),
   tags: z
     .array(z.string().min(1, '태그는 1자 이상이어야 합니다.').max(24, '태그는 24자 이하여야 합니다.'))
-    .max(5, '태그는 최대 5개까지 등록 가능합니다.')
-    .default([]),
+    .max(5, '태그는 최대 5개까지 등록 가능합니다.'),
 });
 
 export const PostCreateForm = (props: PostCreateFormProps) => {
