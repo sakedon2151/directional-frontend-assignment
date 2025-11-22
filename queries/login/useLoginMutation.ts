@@ -11,6 +11,7 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       router.replace('/posts');
       sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('user', JSON.stringify(data.user));
       toast.success('로그인 되었습니다.');
     },
     onError: (error) => {

@@ -5,6 +5,9 @@ import { CategoryToggle } from './CategoryToggle';
 import { SearchInput } from './SearchInput';
 import { SortDropdown } from './SortDropdown';
 import { ButtonGroup } from '../common/ButtonGroup';
+import { Button } from '../common/Button';
+import { Pencil } from 'lucide-react';
+import Link from 'next/link';
 
 interface PostFilterProps {
   className?: string;
@@ -20,6 +23,11 @@ export const PostFilter = (postFilterProps: PostFilterProps) => {
         {postFilterProps.children}
         <SortDropdown />
       </ButtonGroup>
+      <Button variant="default" asChild>
+        <Link href='/posts/create'>
+          <Pencil />새 글 작성
+        </Link>
+      </Button>
     </div>
   );
 };
