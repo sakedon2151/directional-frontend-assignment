@@ -5,10 +5,22 @@ import { PostTable } from '@/components/post/PostTable';
 import { useGetMyPostsQuery } from '@/queries/post/usePostQuery';
 import { useMemo } from 'react';
 import { usePostFilterStore } from '@/hooks/usePostFilterStore';
+import { GetMyPostsParams } from '@/types/post';
 
 export const PostsScreen = () => {
-  const toParams = usePostFilterStore((state) => state.toParams);
-  const params = toParams();
+  const category = usePostFilterStore((state) => state.category);
+  const search = usePostFilterStore((state) => state.search);
+  const sort = usePostFilterStore((state) => state.sort);
+  const order = usePostFilterStore((state) => state.order);
+
+  const params = useMemo<GetMyPostsParams>(() => {
+    const params: GetMyPostsParams = {};
+    if (category) params.category = category;
+    if (search.trim()) params.search = search.trim();
+    if (sort) params.sort = sort;
+    if (order) params.order = order;
+    return params;
+  }, [category, search, sort, order]);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMyPostsQuery(params);
 
