@@ -1,15 +1,16 @@
 # Directional Frontend Assignment
 - 디렉셔널 과제 전형 리포지토리
-
 ## 프로젝트 실행 방법
-
+1. env 파일 추가
+``` 
+NEXT_PUBLIC_API_URL = 'https://fe-hiring-rest-api.vercel.app'
+```
+2. pnpm 스크립트 실행
 ```
 pnpm run dev
 ```
-
 - 테스트 아이디: `sakedon2151@gmail.com`
 - 테스트 비밀번호: `R6kX9fCpL8`
-
 ## 사용한 기술 스택
 #### 핵심 프레임워크
 - Next.js v16.0.3 App Router
